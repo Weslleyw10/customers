@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Persons</title>
+</head>
+<body>
+
+    <div class="row">
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="first_name" placeholder="Nome">
+            <input type="text" name="last_name" placeholder="Sobrenome">
+            <button>Pesquisar</button>
+        </form>
+    </div>
+
+
+    <h1>Listagem de clientes</h1>
+
+    <p><a href="{% url 'logout' %}">Sair</a></p>
+
+    {% if persons %}
+        {% for person in persons %}
+            <p>{{ person.first_name }}</p>
+            <a href="{{person.id}}">Editar</a>
+            <a href="{% url 'del' person.id %}">Deletar</a>
+        {% endfor %}
+    {% else %}
+    <h1>Não existe clientes cadastrados</h1>
+    {% endif %}
+
+</body>
+</html>
